@@ -188,36 +188,6 @@ Shipping a **client-side** key is insecure. Use a tiny backend (server or server
 
 **Example: Express server (very brief)**
 
-```js
-// server.js
-import express from 'express';
-import fetch from 'node-fetch';
-import cors from 'cors';
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-app.post('/api/generate', async (req, res) => {
-  const { text } = req.body;
-  const r = await fetch(
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + process.env.GEMINI_API_KEY,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text }] }] })
-    }
-  );
-  const data = await r.json();
-  res.json(data);
-});
-
-app.listen(8080, () => console.log('Proxy on http://localhost:8080'));
-```
-
-Then call `/api/generate` from your React app **without** exposing the key.
-
----
 
 ## 9) Troubleshooting
 
